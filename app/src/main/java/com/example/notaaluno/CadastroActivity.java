@@ -2,6 +2,7 @@ package com.example.notaaluno;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,13 +16,23 @@ import androidx.core.view.WindowInsetsCompat;
 import java.util.ArrayList;
 
 public class CadastroActivity extends AppCompatActivity {
-    ArrayList<Aluno> listaNotas;
+    ArrayList<Aluno> listaAluno;
+    RepositorioAluno repositorioAluno;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_cadastro);
         setTitle("Cadastro Alunos");
+
+        listaAluno =
+                (ArrayList<Aluno>) getIntent()
+                        .getSerializableExtra("lista_aluno");
+
+        Log.i("Aluno", "Carregado Cadastro aluno com Sucesso");
+
+        repositorioAluno = new RepositorioAluno(this);
 
     }
 
@@ -40,20 +51,16 @@ public class CadastroActivity extends AppCompatActivity {
         Aluno aluno = new Aluno();
         aluno.nome = nome;
         aluno.nota = nota;
-        aluno.id = DadosCompartilhados.getProximoId();
+        repositorioAluno.adicionarAluno(aluno);
 
-        DadosCompartilhados.listaNotas.add(aluno);
         Toast.makeText(this, "Aluno e Notas cadastrados com sucesso!! "+ nome +": " + nota , Toast.LENGTH_SHORT).show();
 
-        DadosCompartilhados.listaNotas.add(aluno);
 
 //        Bundle bundle = new Bundle();
 //        bundle.putSerializable("lista_aluno", listaNotas);
         Intent listagem = new Intent(this, ListagemActivity.class);
 //        listagem.putExtras(listagem);
         startActivity(listagem);
-
-
 
     }
 }

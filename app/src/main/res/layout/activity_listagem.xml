@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="100dp"
     tools:context=".ListagemActivity">
 
     <LinearLayout
@@ -13,6 +14,41 @@
         android:orientation="vertical"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Notas entre" />
+
+        <EditText
+            android:id="@+id/editTextNota1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:text="Nota1" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="a" />
+
+        <EditText
+            android:id="@+id/editTextNota2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:text="Nota2" />
+
+        <Button
+            android:id="@+id/Pesquisar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="pesquisar"
+            android:text="Pesquisar" />
 
         <ListView
             android:id="@+id/listAlunos"

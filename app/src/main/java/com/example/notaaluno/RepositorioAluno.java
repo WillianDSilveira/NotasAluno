@@ -20,14 +20,14 @@ public class RepositorioAluno extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String sql = "CREATE TABLE ALUNO(id INTEGER NOT NULL PRIMARY KEY, nome TEXT, nota TEXT)";
+        String sql = "CREATE TABLE ALUNO(id INTEGER NOT NULL PRIMARY KEY, nome TEXT, nota REAL)";
         sqLiteDatabase.execSQL(sql);
         Log.i("LOG", "Criado com sucesso a tabela LOG");
 
     }
 
     public void adicionarAluno(Aluno aluno){
-        String sql = "INSERT INTO ALUNO VALUES(null,'" + aluno.nome + "','" + aluno.nota + "')";
+        String sql = "INSERT INTO ALUNO VALUES(null,'" + aluno.nome + "'," + aluno.nota + ")";
         Log.i("log", "SQL insert log: "+ sql);
         super.getWritableDatabase().execSQL(sql);
         Log.i("LOG", "SALVO COM SUCESSO");
@@ -42,7 +42,7 @@ public class RepositorioAluno extends SQLiteOpenHelper {
             Aluno aluno = new Aluno();
             aluno.id = cursor.getInt(0); // coluna 0
             aluno.nome = cursor.getString(1); // coluna 1
-            aluno.nota = cursor.getString(2); // coluna 2
+            aluno.nota = cursor.getDouble(2); // coluna 2
             lista.add(aluno);
             cursor.moveToNext();
         }
@@ -50,9 +50,13 @@ public class RepositorioAluno extends SQLiteOpenHelper {
         return lista;
     }
 
-    public List<Aluno> buscarNota(String nota1, String nota2){
+    public List<Aluno> buscarNota(Double nota1, Double nota2){
         List<Aluno> listaAluno = new ArrayList<>();
-        String sql = "SELECT * FROM ALUNO WHERE nota >= " + nota1 + " AND nota <= " + nota2 ;
+        Double maiorNota = Math.max(nota1, nota2);
+        Double menorNota = Math.min(nota1, nota2);
+
+
+        String sql = "SELECT * FROM ALUNO WHERE nota <= " + maiorNota + " AND nota >= " + menorNota ;
         Log.i("LOG", "sql buscarNota "+ sql);
 
         Cursor cursor = getReadableDatabase()
@@ -63,17 +67,15 @@ public class RepositorioAluno extends SQLiteOpenHelper {
             Aluno aluno = new Aluno();
             aluno.id = cursor.getInt(0); // coluna 0
             aluno.nome = cursor.getString(1); // coluna 1
-            aluno.nota = cursor.getString(2);// coluna 2
+            aluno.nota = cursor.getDouble(2);// coluna 2
             cursor.moveToNext();
             listaAluno.add(aluno);
         }
         cursor.close();
+        Log.i("LOG", "buscarNota com sucesso "+ listaAluno);
         Log.i("LOG", "buscarNota com sucesso "+ sql);
         return listaAluno;
     }
-
-
-
 
 
     @Override

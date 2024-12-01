@@ -40,9 +40,9 @@ public class ListagemActivity extends AppCompatActivity {
 
         // pegando a lista do banco
         List<Aluno> listaDB = repositorioAluno.listarAluno();
-        String[] dados = new  String[listaDB.size()];
+        String[] dados = new String[listaDB.size()];
 
-        for(int i=0; i < listaDB.size(); i++){
+        for (int i = 0; i < listaDB.size(); i++) {
             Aluno aluno = listaDB.get(i);
             dados[i] = aluno.nome + " - " + aluno.nota;
             // dados[i] = DadosCompartilhados.lista.get(i).nome;
@@ -55,40 +55,27 @@ public class ListagemActivity extends AppCompatActivity {
 
         listView.setAdapter(adapter);
 
-
-       /* *//*ListView listView = findViewById(R.id.listAlunos);
-        String [] dados = new String[DadosCompartilhados.listaNotas.size()];*//*
-
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dados);
-
-        *//*for (int i=0; i < DadosCompartilhados.listaNotas.size(); i++){
-            dados[i] = DadosCompartilhados.listaNotas.get(i).nome + "" +
-                    DadosCompartilhados.listaNotas.get(i).nota;
-
-            Log.d("Nota", dados[i].toString());
-        }*/
-
     }
 
     public void pesquisar(View view) {
-
-        EditText editTextNota1 = findViewById(R.id.editTextNota1);
-        String nota1 = editTextNota1.getText().toString();
-        EditText editTextNota2 = findViewById(R.id.editTextNota2);
-        String nota2 = editTextNota2.getText().toString();
-
         // ***** estudar metodo EQUALS
         try {
 
+            EditText editTextNota1 = findViewById(R.id.editTextNota1);
+            EditText editTextNota2 = findViewById(R.id.editTextNota2);
+            
+            Double nota1 = Double.parseDouble(editTextNota1.getText().toString());
+            Double nota2 = Double.parseDouble(editTextNota2.getText().toString());
+
             // validacao das notas se e de 0-10
 
-            List<Aluno> listaAluno = repositorioAluno.buscarNota(nota1,nota2);
+            List<Aluno> listaAluno = repositorioAluno.buscarNota(nota1, nota2);
 
             String[] dados = new String[listaAluno.size()];
             // passando da lista para o vetor.
-            for(int i=0; i < listaAluno.size();i++){
+            for (int i = 0; i < listaAluno.size(); i++) {
                 Aluno aluno = listaAluno.get(i);
-                dados[i] = aluno.nome + "\n" + aluno.nota ;
+                dados[i] = aluno.nome + "\n" + aluno.nota;
             }
             ArrayAdapter<String> adapter =
                     new ArrayAdapter<>(this,
@@ -97,18 +84,12 @@ public class ListagemActivity extends AppCompatActivity {
             ListView listView = findViewById(R.id.listAlunos);
             listView.setAdapter(adapter);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(this, "Digite somente numeros", Toast.LENGTH_SHORT).show();
         }
 
     }
 
 
-
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        listaAlunos.addAll(DadosCompartilhados.listaNotas);
-//    }
 }
+

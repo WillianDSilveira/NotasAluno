@@ -50,7 +50,7 @@ public class CadastroActivity extends AppCompatActivity {
 
         Aluno aluno = new Aluno();
         aluno.nome = nome;
-        aluno.nota = nota;
+        aluno.nota = Double.parseDouble(nota);
         repositorioAluno.adicionarAluno(aluno);
 
         Toast.makeText(this, "Aluno e Notas cadastrados com sucesso!! "+ nome +": " + nota , Toast.LENGTH_SHORT).show();
